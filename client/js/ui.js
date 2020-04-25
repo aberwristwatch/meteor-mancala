@@ -1,6 +1,12 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { Session } from 'meteor/session';
+import {
+  Meteor
+} from 'meteor/meteor';
+import {
+  Template
+} from 'meteor/templating';
+import {
+  Session
+} from 'meteor/session';
 
 Template.ui.onCreated(() => {
   Meteor.subscribe('Games');
@@ -19,23 +25,49 @@ Template.ui.helpers({
     return Session.get("inGame");
   },
   status: () => {
-    if(Session.get("inGame")) {
+    if (Session.get("inGame")) {
       let myGame = Games.findOne();
-      
-      if(myGame.status === "waiting")
+
+      if (myGame.status === "waiting")
         return "Looking for an opponent...";
-      else if(myGame.status === Meteor.userId())
+      else if (myGame.status === Meteor.userId())
         return "Your turn";
-      else if(myGame.status !== Meteor.userId() && myGame.status !== "end")
+      else if (myGame.status !== Meteor.userId() && myGame.status !== "end")
         return "opponent's turn";
-      else if(myGame.result === Meteor.userId())
+      else if (myGame.result === Meteor.userId())
         return "You won!";
-      else if(myGame.status === "end" && myGame.result !== Meteor.userId() && myGame.result !== "tie")
+      else if (myGame.status === "end" && myGame.result !== Meteor.userId() && myGame.result !== "tie")
         return "You lost!";
-      else if(myGame.result === "tie")
+      else if (myGame.result === "tie")
         return "It's a tie";
       else
         return "";
+    }
+  },
+  feedback: () => {
+    if (Session.get("inGame")) {
+      let myGame = Games.findOne();
+      console.log(myGame.feedback + ' from ui.js')
+      if (myGame.feedback === "bonus") {
+        if (myGame.status == Meteor.userId()) {
+          return '<p class="currentPlayer">Nice move</p>';
+        } else {
+          return '<p class="otherPlayer">I say! Jolly bad luck old chap</p>';
+        }
+      } else if (myGame.feedback == "extra-turn") {
+        if (myGame.status == Meteor.userId()) {
+          return '<p class="currentPlayer">You have an extra turn</p>';
+        } else {
+          return '<p class="otherPlayer">Your opponent has another go</p>';
+        }
+      } else if (myGame.feedback === "slow")
+        if (myGame.status == Meteor.userId()) {
+          return '<p class="currentPlayer">Come on. Hurry up!</p>';
+        } else {
+          return '<p class="otherPlayer">Has your opponent fallen asleep?</p>';
+        }
+      else
+        return '';
     }
   }
 });

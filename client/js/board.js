@@ -26,11 +26,20 @@ Template.board.helpers({
           return "<div class='selectableField' id='"+x+y+"'></div>";
       }
     }
+  },
+
+  displayPod: (n) => {
+    if (Session.get("inGame")) {
+      let myGame = Games.findOne();
+      if (myGame !== undefined && myGame.status !== "waiting") {
+        return myGame.pods[n].beads;
+      }
+    }
   }
 });
 
 Template.board.events({
-  "click .selectableField": (event) => {
-    Meteor.call("games.makeMove", event.target.id);
+  "click .js-mupdate": (event, template) => {
+    Meteor.call("games.makeMancalaMove", event.target.id);
   }
 });

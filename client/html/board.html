@@ -1,15 +1,22 @@
 <template name="board">
-  <table id="board">
-    {{#each sideLength}}
-      {{#let rowIndex=@index}}
-      <tr>
-        {{#each sideLength}}
-        <td class="field" id="{{rowIndex}}{{@index}}">
-          {{{isMarked rowIndex @index}}}
-        </td>
-        {{/each}}
-      </tr>
-      {{/let}}
-    {{/each}}
-  </table>
+  <div id="board" class="board">
+    <div id="mancala1" title="6:2" class="mancala">{{displayPod 6}}</div>
+    <div id="mancala2" title="13:1" class="mancala">{{displayPod 13}}</div>
+    <div id="divRows">
+      <div id="pod12" title="12:2" class="pod lock js-mupdate">{{displayPod 12}}</div>
+      <div id="pod11" title="11:2" class="pod lock js-mupdate">{{displayPod 11}}</div>
+      <div id="pod10" title="10:2" class="pod lock js-mupdate">{{displayPod 10}}</div>
+      <div id="pod9" title="9:2" class="pod lock js-mupdate">{{displayPod 9}}</div>
+      <div id="pod8" title="8:2" class="pod lock js-mupdate">{{displayPod 8}}</div>
+      <div id="pod7" title="7:2" class="pod lock js-mupdate">{{displayPod 7}}</div>
+    </div>
+    <div id="divRows">
+      <div id="pod0" title="0:2" class="pod lock js-mupdate">{{displayPod 0}}</div>
+      <div id="pod1" title="1:2" class="pod lock js-mupdate">{{displayPod 1}}</div>
+      <div id="pod2" title="2:2" class="pod lock js-mupdate">{{displayPod 2}}</div>
+      <div id="pod3" title="3:2" class="pod lock js-mupdate">{{displayPod 3}}</div>
+      <div id="pod4" title="4:2" class="pod lock js-mupdate">{{displayPod 4}}</div>
+      <div id="pod5" title="5:2" class="pod lock js-mupdate">{{displayPod 5}}</div>
+    </div>
+  </div>
 </template>
